@@ -13,10 +13,9 @@ function App() {
          
         <Routes>
           <Route path="/Hospital-Website" element={<HomePage />} />
-          <Route path="/Hospital-Website/Service" element={<ServicePage/>} />
+          <Route path="/Hospital-Website/Services" element={<ServicePage/>} />
           <Route path="/Hospital-Website/About" element={<Landing />} />
           <Route path="/Hospital-Website/Doctors" element={<DoctorsPage />} />
-
         </Routes>
       </div>
     </Router>
