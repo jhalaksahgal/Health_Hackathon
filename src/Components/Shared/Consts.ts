@@ -22,7 +22,7 @@ import user3 from '@/assets/Images/users/user3.jpg';
 
 import logo from '@/assets/Images/logo.png';
 
-export const links = ['Home', 'Doctors', 'Services', 'About'];
+export const links = ['Home'];
 
 export const descNums = [
   {
