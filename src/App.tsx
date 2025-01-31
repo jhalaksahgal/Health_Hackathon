@@ -1,17 +1,24 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './Components/Main/HomePage';
+import ServicePage from './Components/Services/ServicePage';
 import Landing from './Components/AboutPage/Landing';
-import Footer from './Components/Footer/Footer';
-import Header from './Components/Header/Header';
-import Main from './Components/Main/Main';
-import HomePage from './Components/Services/HomePage';
+
 
 function App() {
   return (
-    <div className="text-[#1d4d85] app min-w-[280px] min-h-screen bg-background">
-      <Header/>
-      <Main/>
-      <Footer/>
-    </div>
-    
+    <Router>
+      <div className="text-[#1d4d85] app min-w-[280px] min-h-screen bg-background">
+         
+        <Routes>
+          <Route path="/Hospital-Website" element={<HomePage />} />
+          <Route path="/Hospital-Website/Service" element={<ServicePage/>} />
+          <Route path="/Hospital-Website/About" element={<Landing />} />
+          {/* <Route path="/Hospital-Website/Doctors" element={<DoctorPage />} /> */}
+
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

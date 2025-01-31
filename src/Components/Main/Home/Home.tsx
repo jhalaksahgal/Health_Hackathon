@@ -3,6 +3,7 @@ import hero from '@/assets/images/hero.png';
 import DescNums from './DescNums';
 import SectionWrapper from '../SectionWrapper';
 
+
 const Home = () => {
   return (
     <SectionWrapper id="home">
