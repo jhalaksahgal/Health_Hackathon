@@ -26,24 +26,24 @@ export const links = ['Home', 'Doctors', 'Services', 'Reviews'];
 
 export const descNums = [
   {
-    num: '500+',
+    num: '25+',
     text: 'Expert Doctors',
   },
   {
-    num: '20k+',
+    num: '200+',
     text: 'Happy Patients',
   },
   {
     num: '24/7',
-    text: 'Emergency Service',
+    text: 'Service',
   },
   {
-    num: '100+',
-    text: 'Operation Theatres',
+    num: '90%',
+    text: 'Accurate Bot',
   },
   {
-    num: '850+',
-    text: 'Hospital Rooms',
+    num: '3',
+    text: 'Different services',
   },
 ];
 
@@ -204,22 +204,22 @@ export const DoctorsData = {
   doctors: [
     {
       img: doc1,
-      name: 'Dr. John Smith',
+      name: 'Dr. Madhav Mishra',
       job: 'Cardiologist',
     },
     {
       img: doc2,
-      name: 'Dr. Kristin Watson',
+      name: 'Dr. Mishti Sharma',
       job: 'Dentist',
     },
     {
       img: doc3,
-      name: 'Dr. Robert Flores',
+      name: 'Dr. Pankaj Kumar',
       job: 'Surgeon',
     },
     {
       img: doc4,
-      name: 'Dr. Katherine Allen',
+      name: 'Dr. Ritu Singh',
       job: 'Neurologist',
     },
   ],
@@ -245,7 +245,7 @@ export const FeedbackData = {
     },
     {
       img: user3,
-      name: 'Lisha Angral',
+      name: 'Bhavna Rathi',
       job: 'Teacher',
       desc: "One thing that stood out to me was the efficiency of the service, i didn't have to wait long for my appointment, and the entire process was hassle-free experience",
     },
