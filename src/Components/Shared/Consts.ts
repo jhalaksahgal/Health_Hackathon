@@ -254,8 +254,8 @@ export const FeedbackData = {
 
 export const FooterData = {
   logo: logo,
-  addresses: ['4517 Washington Ave', 'Manchester, Kentucky 39495'],
-  phone: '+1 (505) 555-0125',
+  addresses: ['Vit Bhopal', 'Kothri Kalan'],
+  phone: '8516894756',
   departments: [
     'Cardiology',
     'Dentistry',
