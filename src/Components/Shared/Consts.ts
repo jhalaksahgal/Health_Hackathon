@@ -22,7 +22,7 @@ import user3 from '@/assets/Images/users/user3.jpg';
 
 import logo from '@/assets/Images/logo.png';
 
-export const links = ['Home', 'Doctors', 'Services', 'Reviews'];
+export const links = ['Home', 'Doctors', 'Services', 'About'];
 
 export const descNums = [
   {
@@ -254,8 +254,8 @@ export const FeedbackData = {
 
 export const FooterData = {
   logo: logo,
-  addresses: ['4517 Washington Ave', 'Manchester, Kentucky 39495'],
-  phone: '+1 (505) 555-0125',
+  addresses: ['Vit Bhopal', 'Kothri Kalan'],
+  phone: '8516894756',
   departments: [
     'Cardiology',
     'Dentistry',

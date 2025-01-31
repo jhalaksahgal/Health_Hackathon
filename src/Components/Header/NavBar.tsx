@@ -6,6 +6,7 @@ import useMediaQuery from '@/Hooks/useMediaQuery';
 
 import Links from './Links';
 import Button from '../UI/Button';
+
 type Props = {
   flexBetween: string;
   selectedPage: SelectedPage;
