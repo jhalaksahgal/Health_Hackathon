@@ -1,8 +1,6 @@
 export enum SelectedPage {
   Home = 'home',
-  Doctors = 'doctors',
-  Services = 'services',
-  About = 'about',
+
 }
 
 export enum SelectedService {

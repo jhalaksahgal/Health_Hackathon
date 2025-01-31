@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@/Hooks/useMediaQuery';
 
-import Links from './Links';
+// import Links from './Links';
 import Button from '../UI/Button';
 
 type Props = {
@@ -18,6 +18,10 @@ const NavBar = ({ flexBetween, selectedPage, setSelectedPage }: Props) => {
   const isAboveMediumScreens = useMediaQuery('(min-width: 900px)');
   const navigate = useNavigate();
 
+  const handleHomeClick = () => {
+    navigate('/Hospital-Website'); // Navigate to Services page
+  };
+  
   const handleDoctorsClick = () => {
     navigate('/Hospital-Website/doctors'); // Navigate to Doctors page
   };
@@ -27,7 +31,7 @@ const NavBar = ({ flexBetween, selectedPage, setSelectedPage }: Props) => {
   };
 
   const handleServicesClick = () => {
-    navigate('/Hospital-Website/services'); // Navigate to Services page
+    navigate('/Hospital-Website/service'); // Navigate to Services page
   };
 
   return (
@@ -36,7 +40,14 @@ const NavBar = ({ flexBetween, selectedPage, setSelectedPage }: Props) => {
       {isAboveMediumScreens && (
         <div className={`${flexBetween} lg:gap-28 gap-20`}>
           <div className={`${flexBetween} gap-16`}>
-            <Links selectedPage={selectedPage} setSelectedPage={setSelectedPage} />
+            {/* <Links selectedPage={selectedPage} setSelectedPage={setSelectedPage} /> */}
+
+            <button
+              className="text-lg font-bold text-primary hover:text-[#2b7dad] transition duration-500"
+              onClick={handleHomeClick}
+            >
+              Home
+            </button>
             <button
               className="text-lg font-bold text-primary hover:text-[#2b7dad] transition duration-500"
               onClick={handleDoctorsClick}
@@ -79,7 +90,12 @@ const NavBar = ({ flexBetween, selectedPage, setSelectedPage }: Props) => {
 
           {/* Mobile Menu Items */}
           <div className="ml-[20%] flex flex-col items-start gap-5 text-2xl">
-            <Links selectedPage={selectedPage} setSelectedPage={setSelectedPage} />
+            <button
+              className="text-lg font-bold text-primary hover:text-[#2b7dad] transition duration-500"
+              onClick={handleHomeClick}
+            >
+              Home
+            </button>
             <button
               className="text-lg font-bold text-primary hover:text-[#2b7dad] transition duration-500"
               onClick={handleDoctorsClick}
