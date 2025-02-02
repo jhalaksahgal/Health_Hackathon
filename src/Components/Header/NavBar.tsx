@@ -31,7 +31,7 @@ const NavBar = ({ flexBetween, selectedPage, setSelectedPage }: Props) => {
   };
 
   const handleServicesClick = () => {
-    navigate('/Hospital-Website/service'); // Navigate to Services page
+    navigate('/Hospital-Website/services'); // Navigate to Services page
   };
 
   return (
