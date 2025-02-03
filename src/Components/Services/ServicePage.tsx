@@ -2,6 +2,7 @@ import React from 'react';
 import NavBar from '../Header/NavBar';
 import Header from '../Header/Header';
 import MentaAI from './MentaAI';
+import Dashboard from './Dashboard';
 
 const ServicePage = () => {
     return (
@@ -47,7 +48,7 @@ const ServicePage = () => {
                     </ul>
                 </nav>
                 <div className='flex-auto w-4/5'> {/* Main content area set to 80% */}
-                    <MentaAI />
+                    <Dashboard />
                 </div>
             </div>
         </div>
