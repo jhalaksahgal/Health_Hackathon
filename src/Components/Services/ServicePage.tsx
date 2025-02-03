@@ -4,9 +4,8 @@ import Header from '../Header/Header';
 
 const ServicePage = () => {
     return (
-        <div className='flex flex-col min-h-screen w-full'>
+        <div className='flex flex-col min-h-screen w-full '>
             <div className='h-16 w-full'> {/* Adjust header height responsively */}
-                <Header />
             </div>
             <div className='flex flex-1 overflow-hidden'>
                 <nav className='w-64 flex-shrink-0 bg-white p-4 lg:fixed lg:h-full'> {/* Sidebar width and positioning */}

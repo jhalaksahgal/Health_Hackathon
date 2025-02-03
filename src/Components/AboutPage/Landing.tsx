@@ -7,6 +7,7 @@ import NewsSlider from "./NewSlider";
 
 import faqData from "./faqData";
 import { Link } from 'react-router-dom';
+import Header from "../Header/Header";
 
 
 const Landing = () => {
@@ -24,7 +25,7 @@ const Landing = () => {
   return (
     <>
       {/* Hero Section */}
-      <section className="py-8 px-4 bg-indigo-950 text-purple-400 lg:p-16">
+      <section className="py-8 px-4 bg-indigo-950 mt-5 sm:mt-24   text-purple-400 lg:p-16">
         <div className="flex flex-col items-center gap-y-4 mb-8 md:flex-row">
           <h1 className="text-4xl text-balance mr-auto md:basis-1/3 md:text-5xl">
             We provide world class{" "}

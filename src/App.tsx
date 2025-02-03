@@ -4,13 +4,14 @@ import HomePage from './Components/Main/HomePage';
 import ServicePage from './Components/Services/ServicePage';
 import Landing from './Components/AboutPage/Landing';
 import DoctorsPage from './Components/Services/DoctorsPage';
+import Header from './Components/Header/Header';
 
 
 function App() {
   return (
     <Router>
       <div className="text-[#1d4d85] app min-w-[280px] min-h-screen bg-background">
-         
+         <Header/>
         <Routes>
           <Route path="/Hospital-Website" element={<HomePage />} />
           <Route path="/Hospital-Website/Services" element={<ServicePage/>} />
