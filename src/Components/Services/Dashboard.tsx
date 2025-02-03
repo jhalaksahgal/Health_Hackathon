@@ -31,15 +31,6 @@ const Dashboard: React.FC = () => {
     ],
   };
 
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top" as const,
-      },
-    },
-  };
-
   return (
     <div className="flex flex-wrap gap-4 p-4">
       <div className="bg-white shadow-md rounded-2xl p-6 flex-1 min-w-[300px]">
