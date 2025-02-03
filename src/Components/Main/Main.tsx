@@ -2,7 +2,7 @@ import Home from '@/Components/Main/Home/Home';
 import Services from './Features/Services';
 import Doctors from './DocSlide/Doctors';
 import Reviews from './Review/Reviews';
-import Header from '../Header/Header';
+// import Header from '../Header/Header';
 
 const Main = () => {
   return (

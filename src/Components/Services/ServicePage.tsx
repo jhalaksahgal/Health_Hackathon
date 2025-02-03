@@ -1,7 +1,7 @@
-import React from 'react';
-import NavBar from '../Header/NavBar';
-import Header from '../Header/Header';
-import MentaAI from './MentaAI';
+// import React from 'react';
+// import NavBar from '../Header/NavBar';
+// import Header from '../Header/Header';
+// import MentaAI from './MentaAI';
 import Dashboard from './Dashboard';
 
 const ServicePage = () => {
