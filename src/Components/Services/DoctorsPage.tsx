@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState } from 'react';
 
 // Define types for Doctor and Appointment
@@ -38,9 +37,7 @@ const DoctorsPage: React.FC = () => {
       doctorsData.filter((doctor) => doctor.name.toLowerCase().includes(filterText))
     );
   };
-=======
 // import React from 'react'
->>>>>>> 7567107cbd407838520a95a21cb7a063c0ca6636
 
   return (
     <div className="min-h-screen bg-gray-100 mt-10 py-12 px-4 sm:px-6 lg:px-8">

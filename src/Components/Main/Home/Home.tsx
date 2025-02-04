@@ -9,12 +9,12 @@ const Home = () => {
     <SectionWrapper id="home">
       <div className="flex flex-col-reverse  md:flex-row items-center justify-between gap-10 text-center md:text-left">
         <div className=" tracking-wider md:tracking-normal max-w-xs lg:max-w-xl ">
-          <h1 className="lg:text-7xl text-4xl font-bold">
-            Your Health Is Our Top Priority
+          <h1 className="lg:text-6xl text-4xl font-bold">
+          Your Wellness, Our Commitment Health Comes First
           </h1>
           <p className="text-lg md:text-base lg:text-xl my-10">
-            Securely share your comprehensive medical history with doctors and
-            loved ones, for better communication and care.
+          Share your medical history securely with doctors and loved ones via
+          HealthMentá.ai, Prescription Manager, and Health Centers
           </p>
           <Button>Appointment Now</Button>
         </div>
