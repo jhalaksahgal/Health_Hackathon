@@ -6,12 +6,12 @@ const Header = () => {
   const [selectedPage, setSelectedPage] = useState<SelectedPage>(
     SelectedPage.Home
   );
-  const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
+  // const [isTopOfPage setIsTopOfPage] = useState<boolean>(true);
   const flexBetween = 'flex items-center justify-between';
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsTopOfPage(window.scrollY === 0);
+      // setIsTopOfPage(window.scrollY === 0);
       if (window.scrollY === 0) {
         setSelectedPage(SelectedPage.Home);
       }

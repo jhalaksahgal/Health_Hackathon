@@ -1,7 +1,8 @@
-import React from 'react';
-import NavBar from '../Header/NavBar';
-import Header from '../Header/Header';
-import MentaAI from './MentaAI';
+// import React from 'react';
+// import NavBar from '../Header/NavBar';
+// import Header from '../Header/Header';
+// import MentaAI from './MentaAI';
+import Dashboard from './Dashboard';
 
 const ServicePage = () => {
     return (
@@ -44,10 +45,20 @@ const ServicePage = () => {
                                 Health Centers
                             </a>
                         </li>
+                        <li className='flex items-center'>
+                            <img
+                                className='w-0 md:w-12 md:h-12 md:mr-4' // Adjust image size responsively
+                                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjrpsryruSpqhLVKB0kYYFEFciwSXPkn-XDA&s'
+                                alt='Service 2'
+                            />
+                            <a className='hover:text-blue-500' href='#services'>
+                                Dashboard
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <div className='flex-auto w-4/5'> {/* Main content area set to 80% */}
-                    <MentaAI />
+                    <Dashboard />
                 </div>
             </div>
         </div>
