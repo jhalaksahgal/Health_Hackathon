@@ -42,30 +42,31 @@ const DoctorsPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-100 mt-10 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between mb-6">
+        <div className="flex justify-center mb-6">
           <input
             type="text"
             placeholder="Search doctors..."
             onChange={filterAppointments}
-            className="p-2 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-          <div className="bg-white p-4 shadow-lg rounded-md w-1/4">
+            className="p-1 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 h-12 w-1/2"/>
+        </div>
+        <div className="flex justify-center mb-6">
+          <div className="bg-white p-4 shadow-lg rounded-md w-1/2">
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Appointment Cart</h2>
             <ul>
               {appointments.length === 0 ? (
-                <li className="text-gray-500">No appointments booked</li>
+          <li className="text-gray-500">No appointments booked</li>
               ) : (
-                appointments.map((doctor) => (
-                  <li key={doctor.id} className="flex justify-between items-center py-2 border-b border-gray-200">
-                    <span className="text-gray-600">{doctor.name}</span>
-                    <button
-                      onClick={() => removeAppointment(doctor.id)}
-                      className="text-red-600 hover:text-red-800 text-sm"
-                    >
-                      Remove
-                    </button>
-                  </li>
-                ))
+          appointments.map((doctor) => (
+            <li key={doctor.id} className="flex justify-between items-center py-2 border-b border-gray-200">
+              <span className="text-gray-600">{doctor.name}</span>
+              <button
+                onClick={() => removeAppointment(doctor.id)}
+                className="text-red-600 hover:text-red-800 text-sm"
+              >
+                Remove
+              </button>
+            </li>
+          ))
               )}
             </ul>
             <button
