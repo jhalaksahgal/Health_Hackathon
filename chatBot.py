@@ -75,8 +75,8 @@ model = genai.GenerativeModel(
     system_instruction="You are a doctor. Be short and brief in your response."
 )
 
-# API: Chatbot interaction and store chat history
-@app.post("/chat/")  
+# API: Chatbot interaction and store chat history@app.post("/chat/")  
+@app.post("/chat/")
 def chat_with_bot(chat_request: ChatRequest):
     patient_id = chat_request.patient_id
     user_message = chat_request.user_message
@@ -112,8 +112,12 @@ def chat_with_bot(chat_request: ChatRequest):
         # Extract response text safely
         bot_response = getattr(response, "text", "").strip() if hasattr(response, "text") else "Sorry, I couldn't generate a response."
 
-        # Handle token usage properly
-        tokens_used = getattr(response.usage_metadata, "total_tokens", 0) if hasattr(response, "usage_metadata") else 0
+        # Handle token usage safely
+        tokens_used = 0
+        if hasattr(response, "usage_metadata") and response.usage_metadata:
+            print("Usage Metadata Found:", response.usage_metadata)  # Debugging
+            tokens_used = response.usage_metadata.get("total_tokens", 0)  # Use `.get()` instead of direct access
+
         tokens_remaining = max(0, 10000 - tokens_used)  # Ensure it's not negative
 
         # Store chat in PostgreSQL
