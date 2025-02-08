@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import MentaAI from "./MentaAI";
 import Dashboard from "./Dashboard";
 
