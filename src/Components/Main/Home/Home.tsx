@@ -1,5 +1,5 @@
 import Button from '@/Components/UI/Button';
-import hero from '@/assets/images/hero.png';
+import hero from '../../../assets/images/hero.png';
 import DescNums from './DescNums';
 import SectionWrapper from '../SectionWrapper';
 
