@@ -1,28 +1,30 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import MentaAI from "./MentaAI";
 import Dashboard from "./Dashboard";
+import PriscriptionManager from "./PriscriptionManager";
+import HealthCenters from "./healthcenters";
 
 const ServicePage = () => {
-  const [activeComponent, setActiveComponent] = useState("healthmenta");
+  const [activeComponent, setActiveComponent] = useState("dashboard");
 
   // Function to render the active component dynamically
   const renderComponent = () => {
     switch (activeComponent) {
-      case "healthmenta":
-        return <MentaAI />;
       case "dashboard":
         return <Dashboard />;
+      case "healthmenta":
+        return <MentaAI />;
       case "prescription":
-        return <div>Prescription Manager Component</div>; // Replace with your actual component
+        return <PriscriptionManager />; 
       case "centers":
-        return <div>Health Centers Component</div>; // Replace with your actual component
+        return <HealthCenters/>; 
       default:
         return <div>Select a service to display</div>;
     }
   };
 
   return (
-    <div className="flex flex-col min-h-screen w-full">
+    <div className="flex flex-col min-h-screen w-full ">
       <div className="h-16 w-full">
         {/* Add a header or space here */}
       </div>
