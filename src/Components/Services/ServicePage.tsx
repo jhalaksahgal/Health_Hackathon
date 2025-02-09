@@ -2,6 +2,7 @@ import { useState } from "react";
 import MentaAI from "./MentaAI";
 import Dashboard from "./Dashboard";
 import PriscriptionManager from "./PriscriptionManager";
+import HealthCenters from "./healthcenters";
 
 const ServicePage = () => {
   const [activeComponent, setActiveComponent] = useState("dashboard");
@@ -14,9 +15,9 @@ const ServicePage = () => {
       case "healthmenta":
         return <MentaAI />;
       case "prescription":
-        return <PriscriptionManager />; // Replace with your actual component
+        return <PriscriptionManager />; 
       case "centers":
-        return <div>Health Centers Component</div>; // Replace with your actual component
+        return <HealthCenters/>; 
       default:
         return <div>Select a service to display</div>;
     }
