@@ -3,7 +3,7 @@ import { ChatHistoryModel, PatientModel } from "../models.js";
 
 const router = express.Router();
 
-// ✅ Add Chat History for a Patient
+// Add Chat History for a Patient
 router.post("/add", async (req, res) => {
     try {
         const { patient_id, user_message, bot_response, tokens_used } = req.body;
@@ -19,7 +19,7 @@ router.post("/add", async (req, res) => {
     }
 });
 
-// ✅ Fetch Chat History for a Patient
+// Fetch Chat History for a Patient
 router.get("/get/:patient_id", async (req, res) => {
     try {
         const { patient_id } = req.params;
@@ -31,7 +31,7 @@ router.get("/get/:patient_id", async (req, res) => {
     }
 });
 
-// ✅ Delete Chat History
+// Delete Chat History
 router.delete("/delete/:chat_id", async (req, res) => {
     try {
         const { chat_id } = req.params;
