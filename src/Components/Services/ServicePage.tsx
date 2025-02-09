@@ -3,15 +3,15 @@ import MentaAI from "./MentaAI";
 import Dashboard from "./Dashboard";
 
 const ServicePage = () => {
-  const [activeComponent, setActiveComponent] = useState("healthmenta");
+  const [activeComponent, setActiveComponent] = useState("dashboard");
 
   // Function to render the active component dynamically
   const renderComponent = () => {
     switch (activeComponent) {
-      case "healthmenta":
-        return <MentaAI />;
       case "dashboard":
         return <Dashboard />;
+      case "healthmenta":
+        return <MentaAI />;
       case "prescription":
         return <div>Prescription Manager Component</div>; // Replace with your actual component
       case "centers":

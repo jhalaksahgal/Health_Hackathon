@@ -44,7 +44,7 @@ const Dashboard: React.FC = () => {
             ))}
           </ul>
         ) : (
-          <p>Loading medicines...</p>
+          <p>No medicines...</p>
         )}
       </div>
       <div className="bg-white shadow-md rounded-2xl p-6 flex-1 min-w-[300px]">

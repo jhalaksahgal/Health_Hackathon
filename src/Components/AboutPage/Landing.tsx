@@ -1,270 +1,100 @@
-import { useState } from "react";
-import { FaDna, FaStethoscope, FaLaptopMedical } from "react-icons/fa";
-import { IoArrowForward, IoClose } from "react-icons/io5";
+import React from "react";
+import { motion } from "framer-motion";
+import Card, { CardContent } from "./card";
+import { FaRobot, FaFileMedical, FaHospital, FaChartBar } from "react-icons/fa";
+import "./about.css";
 
-import DoctorSlider from "./DoctorSlider";
-import NewsSlider from "./NewSlider";
+const features = [
+  {
+    icon: <FaRobot size={50} className="text-blue-500" />, 
+    title: "AI Health Monitoring Chatbot", 
+    description: "An intelligent chatbot that monitors your health and provides instant insights."
+  },
+  {
+    icon: <FaFileMedical size={50} className="text-green-500" />, 
+    title: "Prescription Analyzer", 
+    description: "Upload prescriptions to get insights on medicine interactions and dosages."
+  },
+  {
+    icon: <FaHospital size={50} className="text-red-500" />, 
+    title: "Nearby Health Center Locator", 
+    description: "Find the nearest hospitals, pharmacies, and clinics instantly."
+  },
+  {
+    icon: <FaChartBar size={50} className="text-purple-500" />, 
+    title: "Dashboard & Records", 
+    description: "Maintain and visualize personal health records with ease."
+  }
+];
 
-import faqData from "./faqData";
-import { Link } from 'react-router-dom';
-// import Header from "../Header/Header";
-
-
-const Landing = () => {
-  // FAQ Section state handling
-  const [displayFAQ, setDisplayFAQ] = useState(0);
-
-  const handleFAQ = (id: number) => {
-    if (id !== displayFAQ) {
-      setDisplayFAQ(id);
-    } else if (id === displayFAQ) {
-      setDisplayFAQ(0);
-    }
-  };
-
+const About = () => {
   return (
-    <>
-      {/* Hero Section */}
-      <section className="py-8 px-4 bg-indigo-950 mt-5 sm:mt-24   text-purple-400 lg:p-16">
-        <div className="flex flex-col items-center gap-y-4 mb-8 md:flex-row">
-          <h1 className="text-4xl text-balance mr-auto md:basis-1/3 md:text-5xl">
-            We provide world class{" "}
-            <span className="font-playfair-display text-teal-400 italic">
-              treatment
-            </span>{" "}
-            for everyone.
-          </h1>
-
-          <div className="flex flex-col gap-y-4 md:basis-1/3">
-            <p className="w-fit">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem
-              ipsum quibusdam earum architecto mollitia perspiciatis odio ipsam
-              nam praesentium.
-            </p>
-
-            <Link
-              to={"/contact"}
-              className="w-fit py-4 px-8 flex items-center gap-x-4 bg-teal-500 font-medium text-white rounded-2xl lg:hover:bg-teal-600 ease-in-out duration-200 active:scale-95"
-            >
-              Make Appointment <IoArrowForward className="text-2xl" />
-            </Link>
+    <div className="about-container p-10 text-center bg-gray-100 min-h-screen">
+      <motion.h1 
+        className="text-4xl font-bold text-gray-800 mb-6"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+      >
+       About Our Healthcare Platform
+      </motion.h1>
+      <p className="text-lg font-bold text-gray-600 max-w-2xl mx-auto mb-10">
+        Our platform integrates AI-powered solutions to provide personalized healthcare assistance. 
+        From monitoring your health to analyzing prescriptions and finding nearby medical centers, 
+        we ensure a seamless experience for users.
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+  {features.map((feature, index) => (
+    <motion.div 
+      key={index} 
+      className="flex flex-col items-center h-full"
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, delay: index * 0.2 }}
+    >
+      <Card className="p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 bg-white h-full">
+        <CardContent>
+          <div className="h-full flex flex-col justify-center">
+          <div className="flex flex-col items-center">
+            {feature.icon}
+            <h2 className="text-xl font-semibold text-gray-800 mt-4">{feature.title}</h2>
+            <p className="text-gray-600 mt-2 text-center">{feature.description}</p>
           </div>
-        </div>
+          </div>
+        </CardContent>
+      </Card>
+    </motion.div>
+  ))}
+</div>
 
-        <img
-          src="src\assets\Images\news\hero.jpg"
-          alt="Scientist at work"
-          className="w-full h-4/5 max-h-[700px] object-cover rounded-2xl"
-        />
-      </section>
-
-      {/* "Core Values" Section (fields of study) */}
-      <section className="py-16 px-4 text-purple-900 lg:p-16">
-        <h2 className="text-3xl font-semibold mb-2">
-          Our{" "}
-          <span className="font-playfair-display italic text-purple-400">
-            Core
-          </span>{" "}
-          Values
-        </h2>
-
-        <p className="mb-12">
-          Expedita similique soluta vel quibusdam ea repellendus blanditiis
-          atque, laudantium assumenda dolor ratione eveniet.
+      <div className="text-left max-w-3xl mx-auto mb-10">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Why These Features Matter</h2>
+        <p className="text-gray-600 mb-4">
+          Modern healthcare is often plagued by inefficiencies, misdiagnoses, and lack of access to proper medical guidance. 
+          Our AI-driven platform aims to bridge these gaps by providing real-time health monitoring, prescription insights, 
+          and instant access to healthcare facilities.
         </p>
-
-        <div className="flex flex-wrap justify-around gap-y-8 [&>*]:rounded-3xl">
-          <div className="max-w-80 p-8 flex flex-col gap-y-4 bg-emerald-100">
-            <div className="w-fit p-4 text-3xl bg-emerald-200 rounded-full">
-              <FaDna />
-            </div>
-
-            <h3 className="text-xl font-bold">Early Cancer Detection</h3>
-
-            <p>
-              Odit esse deleniti id veniam dicta corporis et magni explicabo,
-              distinctio velit harum, provident explicabo dolor corporis iste.
-            </p>
-
-            <a className="w-fit text-xl text-teal-400 font-semibold" href="#">
-              Read More
-            </a>
-          </div>
-
-          <div className="max-w-80 p-8 flex flex-col gap-y-4 bg-orange-100">
-            <div className="w-fit p-4 text-3xl bg-orange-200 rounded-full">
-              <FaStethoscope />
-            </div>
-
-            <h3 className="text-xl font-bold">Clinical Neurophysiology</h3>
-
-            <p>
-              Odit esse deleniti id veniam dicta corporis et magni explicabo,
-              distinctio velit harum, provident explicabo dolor corporis iste.
-            </p>
-
-            <a className="w-fit text-xl text-teal-400 font-semibold" href="#">
-              Read More
-            </a>
-          </div>
-
-          <div className="max-w-80 p-8 flex flex-col gap-y-4 bg-purple-100">
-            <div className="w-fit p-4 text-3xl bg-purple-200 rounded-full">
-              <FaLaptopMedical />
-            </div>
-
-            <h3 className="text-xl font-bold">Gastroenterology</h3>
-
-            <p>
-              Odit esse deleniti id veniam dicta corporis et magni explicabo,
-              distinctio velit harum, provident explicabo dolor corporis iste.
-            </p>
-
-            <a className="w-fit text-xl text-teal-400 font-semibold" href="#">
-              Read More
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Health and well-being Section */}
-      <section className="py-8 px-4 bg-purple-400 text-purple-900 lg:px-16 lg:py-24">
-        <div className="flex flex-col items-center gap-y-4 mb-8 md:flex-row">
-          <h3 className="text-2xl font-semibold mr-auto md:basis-2/4 md:text-4xl">
-            Finding new ways to improve the{" "}
-            <span className="font-playfair-display italic text-purple-50">
-              health and well-being
-            </span>{" "}
-            of people everywhere.
-          </h3>
-
-          <div className="flex flex-col gap-y-4 md:basis-1/3">
-            <p className="w-fit text-xl">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem
-              ipsum quibusdam earum architecto mollitia perspiciatis.
-            </p>
-
-            <Link
-              to={"/about"}
-              className="w-fit py-4 px-8 flex items-center gap-x-4 bg-teal-500 font-medium text-white rounded-2xl lg:hover:bg-teal-600 ease-in-out duration-200 active:scale-95"
-            >
-              Read More <IoArrowForward className="text-2xl" />
-            </Link>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-3 gap-x-2 [&>*]:h-full [&>*]:rounded-xl md:gap-x-6">
-          <img
-            loading="lazy"
-            src="/assets/images/landing/consultation-1.jpg"
-            alt="A medical consultation."
-          />
-          <img
-            loading="lazy"
-            src="/assets/images/landing/consultation-2.jpg"
-            alt="A medical consultation."
-          />
-          <img
-            loading="lazy"
-            src="/assets/images/landing/consultation-3.jpg"
-            alt="A medical consultation."
-          />
-        </div>
-      </section>
-
-      {/* Doctors Showcase Section */}
-      <section className="py-8 px-4 text-purple-900 lg:px-16 lg:py-24">
-        <div className="flex flex-col items-center gap-y-4 mb-8 md:flex-row">
-          <h4 className="text-4xl font-semibold mr-auto md:basis-1/3">
-            Discover our Highly Qualified{" "}
-            <span className="font-playfair-display text-purple-400 italic">
-              Doctors
-            </span>
-          </h4>
-
-          <Link
-            to={"/doctors"}
-            className="w-fit py-4 px-8 self-start flex items-center gap-x-4 bg-teal-500 font-medium text-white rounded-2xl lg:hover:bg-teal-600 ease-in-out duration-200 active:scale-95"
-          >
-            See All Doctors <IoArrowForward className="text-2xl" />
-          </Link>
-        </div>
-
-        <DoctorSlider />
-
-        <span className="text-purple-950 text-center md:hidden">
-          *Swipe left or right to see more.
-        </span>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-8 px-4 bg-cyan-400 text-purple-900 cursor-pointer lg:px-16 lg:py-24">
-        <h5 className="text-2xl md:text-4xl font-semibold mb-12">
-          Frequently Asked{" "}
-          <span className="text-white font-playfair-display italic">
-            Questions
-          </span>
-        </h5>
-
-        <div className="flex flex-col">
-          {faqData.map((faq) => (
-            <div
-              key={faq.id}
-              className="flex flex-wrap gap-y-4 border-b border-purple-900 [&>*]:px-4 [&>*]:select-none"
-              onClick={() => handleFAQ(faq.id)}
-            >
-              <div className="w-full py-4 flex items-center justify-between group">
-                <p className="basis-4/5 font-bold cursor-pointer ease-linear duration-150 group-hover:text-purple-500 lg:text-xl">
-                  {faq.question}
-                </p>
-                <span
-                  className={`text-4xl ease-in-out duration-300 ${
-                    displayFAQ === faq.id ? "rotate-0" : "rotate-45"
-                  } cursor-pointer`}
-                  onClick={() => handleFAQ(faq.id)}
-                >
-                  <IoClose />
-                </span>
-              </div>
-
-              <p
-                className={`${
-                  displayFAQ === faq.id ? "block" : "hidden"
-                } basis-full pb-4 font-semibold cursor-default animate-slide-in-top`}
-              >
-                {faq.answer}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* News Section */}
-      <section className="py-8 px-4 text-purple-900 lg:px-16 lg:py-24">
-        <div className="flex flex-col items-center gap-y-4 mb-8 md:flex-row">
-          <h4 className="text-4xl font-semibold mr-auto md:basis-1/3">
-            Our Latest{" "}
-            <span className="font-playfair-display text-purple-400 italic">
-              News
-            </span>
-          </h4>
-
-          <Link
-            to={"/blog"}
-            className="w-fit py-4 px-8 self-start flex items-center gap-x-4 bg-teal-500 font-medium text-white rounded-2xl lg:hover:bg-teal-600 ease-in-out duration-200 active:scale-95"
-          >
-            Read all news <IoArrowForward className="text-2xl" />
-          </Link>
-        </div>
-
-        <NewsSlider />
-
-        <span className="text-purple-950 text-center md:hidden">
-          *Swipe left or right to see more.
-        </span>
-      </section>
-    </>
+        <div className="video-container mb-10">
+        <iframe 
+          className="w-full max-w-3xl h-64 md:h-96 mx-auto rounded-lg shadow-lg" 
+          src="https://www.youtube.com/embed/uvqDTbusdUU?si=XXAZkMWlBZp7RUBg"
+          title="Healthcare AI Overview" 
+          frameBorder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowFullScreen
+        ></iframe>
+      </div>
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Problems We Solve</h2>
+        <ul className="list-disc list-inside text-gray-600">
+          <li><strong>Delayed Diagnosis:</strong> Our chatbot offers immediate health insights, reducing the time to diagnosis.</li>
+          <li><strong>Prescription Confusion:</strong> The analyzer helps users understand their medications better.</li>
+          <li><strong>Accessibility Issues:</strong> Our locator helps find the nearest health centers within seconds.</li>
+          <li><strong>Disorganized Medical Records:</strong> A centralized dashboard ensures all records are well-organized and easily accessible.</li>
+        </ul>
+      </div>
+      
+    </div>
   );
 };
 
-export default Landing;
+export default About;
