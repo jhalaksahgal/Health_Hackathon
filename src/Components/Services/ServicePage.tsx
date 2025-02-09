@@ -1,6 +1,7 @@
 import { useState } from "react";
 import MentaAI from "./MentaAI";
 import Dashboard from "./Dashboard";
+import PriscriptionManager from "./PriscriptionManager";
 
 const ServicePage = () => {
   const [activeComponent, setActiveComponent] = useState("dashboard");
@@ -13,7 +14,7 @@ const ServicePage = () => {
       case "healthmenta":
         return <MentaAI />;
       case "prescription":
-        return <div>Prescription Manager Component</div>; // Replace with your actual component
+        return <PriscriptionManager />; // Replace with your actual component
       case "centers":
         return <div>Health Centers Component</div>; // Replace with your actual component
       default:
@@ -22,7 +23,7 @@ const ServicePage = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen w-full">
+    <div className="flex flex-col min-h-screen w-full ">
       <div className="h-16 w-full">
         {/* Add a header or space here */}
       </div>
