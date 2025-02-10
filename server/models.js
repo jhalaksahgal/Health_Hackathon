@@ -1,6 +1,15 @@
 import mongoose from "mongoose";
 
-// Patient Schema
+
+const DoctorSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    specialization: { type: String, required: true },
+    years_of_experience: { type: Number, required: true },
+    contact_info: { type: String, required: true }
+}, { timestamps: true });
+
+const DoctorModel = mongoose.model("doctors", DoctorSchema);
+
 const PatientSchema = new mongoose.Schema({
     name: { type: String, required: true },
     age: { type: Number, required: true },
@@ -18,6 +27,8 @@ const ChatHistorySchema = new mongoose.Schema({
     tokens_used: { type: Number, default: 0 }
 }, { timestamps: true });
 
+
+
 const ChatHistoryModel = mongoose.model("chat_history", ChatHistorySchema);
 
-export { PatientModel, ChatHistoryModel };
+export { PatientModel, ChatHistoryModel,DoctorModel };
