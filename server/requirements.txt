@@ -1,5 +1,7 @@
+os
 google-generativeai
 fastapi
 pydantic
 pymongo
 python-dotenv
+uvicorn
