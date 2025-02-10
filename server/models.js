@@ -20,4 +20,14 @@ const ChatHistorySchema = new mongoose.Schema({
 
 const ChatHistoryModel = mongoose.model("chat_history", ChatHistorySchema);
 
-export { PatientModel, ChatHistoryModel };
+// Doctor Schema
+const DoctorSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    specialization: { type: String, required: true },
+    years_of_experience: { type: Number, required: true },
+    contact_info: { type: String, required: true }
+}, { timestamps: true });
+
+const DoctorModel = mongoose.model("doctors", DoctorSchema);
+
+export { PatientModel, ChatHistoryModel, DoctorModel };

@@ -3,17 +3,35 @@ import React, { useState } from 'react';
 const MentaAI: React.FC = () => {
     const [messages, setMessages] = useState<{ user: string, text: string }[]>([]);
     const [input, setInput] = useState('');
+const handleSend = async () => {
+    if (input.trim()) {
+        setMessages([...messages, { user: 'You', text: input }]);
 
-    const handleSend = () => {
-        if (input.trim()) {
-            setMessages([...messages, { user: 'You', text: input }]);
-            // Simulate AI response
+        try {
+            const response = await fetch('http://localhost:8000/chat/chatWithBot', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                patient_id: "67a932d0ca3e10e26a9d8c40", // Replace with actual patient ID
+                user_message: input,
+            }),
+            });
+
+            const data = await response.json();
             setTimeout(() => {
-                setMessages(prevMessages => [...prevMessages, { user: 'MentaAI', text: 'This is a simulated response.' }]);
-            }, 1000);
-            setInput('');
+            setMessages((prevMessages) => [...prevMessages, { user: 'MentaAI', text: data.bot_response }]);
+            }, 1000); // Delay of 1 second
+        } catch (error) {
+            console.error('Error:', error);
+            setMessages((prevMessages) => [...prevMessages, { user: 'MentaAI', text: 'Error connecting to the server.' }]);
         }
-    };
+
+        setInput('');
+    }
+};
+
 
     return (
         <div className="flex flex-col h-screen p-4 bg-gray-100">
