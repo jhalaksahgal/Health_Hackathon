@@ -1,79 +1,156 @@
-from fastapi import APIRouter, HTTPException
-from pymongo import MongoClient
-from pydantic import BaseModel
-import google.generativeai as genai
 import os
-from bson import ObjectId  # Fix MongoDB ObjectId issue
+import google.generativeai as genai
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from pymongo import MongoClient
+from bson import ObjectId
+from dotenv import load_dotenv
 
 # Load environment variables
-MONGO_URI = os.getenv("MONGO_URI", "mongodb+srv://healthHack:healthHack1234@healthhack.5noaz.mongodb.net/healthDB?retryWrites=true&w=majority")
+load_dotenv()
+MONGO_URI = os.getenv("MONGO_URI")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+# Check if API key is loaded
+if not GEMINI_API_KEY:
+    raise RuntimeError("❌ Google API key is missing. Set 'GEMINI_API_KEY' in environment variables.")
+
+# Configure Gemini API
+genai.configure(api_key=GEMINI_API_KEY)
+
+# Initialize FastAPI
+app = FastAPI()
 
 # Connect to MongoDB
 client = MongoClient(MONGO_URI)
-db = client.healthDB
-patients_collection = db.patients
-chat_history_collection = db.chat_history
+db = client.healthDB  # Database Name
+patients_collection = db.patients  # Patients Collection
+chat_history_collection = db.chat_history  # Chat History Collection
 
-# Initialize Gemini AI
-API_KEY = os.getenv("GEMINI_API_KEY")
-if not API_KEY:
-    raise ValueError("GEMINI_API_KEY is not set! Please check your environment variables.")
+# Pydantic model for Patient
+class Patient(BaseModel):
+    name: str
+    age: int
+    gender: str
+    medical_history: str
 
-genai.configure(api_key=API_KEY)
-model = genai.GenerativeModel("gemini-pro")
-
-# FastAPI Router
-router = APIRouter()
-
-# Request Model
+# Pydantic model for Chat Requests
 class ChatRequest(BaseModel):
-    patient_id: str
+    patient_id: str  # Now using MongoDB ObjectId as a string
     user_message: str
 
-@router.post("/chat/chatWithBot")
-async def chat_with_bot(chat_request: ChatRequest):
+# Gemini model configuration
+safety_settings = [
+    {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
+    {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_MEDIUM_AND_ABOVE"},
+    {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_MEDIUM_AND_ABOVE"},
+    {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_MEDIUM_AND_ABOVE"},
+]
+
+generation_config = {
+    "temperature": 0.7,
+    "top_p": 0.9,
+    "max_output_tokens": 500,
+}
+
+model = genai.GenerativeModel(
+    model_name="gemini-2.0-flash-exp",
+    safety_settings=safety_settings,
+    generation_config=generation_config,
+    system_instruction="your role to take the provided information and give each reply according to that and try to be straight forward and simple, try to provide a quick and simple solution (like first aid and such) before telling the patient to consult a doctor.",
+)
+
+# ✅ API to Add a New Patient
+@app.post("/patients/")
+def create_patient(patient: Patient):
+    new_patient = {
+        "name": patient.name,
+        "age": patient.age,
+        "gender": patient.gender,
+        "medical_history": patient.medical_history
+    }
+    result = patients_collection.insert_one(new_patient)
+    return {"patient_id": str(result.inserted_id), "message": "Patient added successfully"}
+
+# ✅ API to Update Patient Details
+@app.put("/patients/{patient_id}")
+def update_patient(patient_id: str, patient: Patient):
+    result = patients_collection.update_one(
+        {"_id": ObjectId(patient_id)},
+        {"$set": patient.dict()}
+    )
+
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Patient not found")
+
+    return {"message": "Patient updated successfully"}
+
+# ✅ API to Get Chat History for a Patient
+@app.get("/chat/{patient_id}")
+def get_chat_history(patient_id: str):
+    chats = list(chat_history_collection.find({"patient_id": ObjectId(patient_id)}, {"_id": 0}))
+
+    if not chats:
+        raise HTTPException(status_code=404, detail="No chat history found for this patient")
+
+    return {"chat_history": chats}
+
+# ✅ API to Delete a Patient
+@app.delete("/patients/{patient_id}")
+def delete_patient(patient_id: str):
+    result = patients_collection.delete_one({"_id": ObjectId(patient_id)})
+
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Patient not found")
+
+    return {"message": "Patient deleted successfully"}
+
+# ✅ API to Delete Chat History for a Patient
+@app.delete("/chat/{patient_id}")
+def delete_chat_history(patient_id: str):
+    result = chat_history_collection.delete_many({"patient_id": ObjectId(patient_id)})
+
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="No chat history found for this patient")
+
+    return {"message": "Chat history deleted successfully"}
+
+# ✅ API for Chatbot Interaction and Storing Chat History
+@app.post("/chat/chatWithBot")
+def chat_with_bot(chat_request: ChatRequest):
     patient_id = chat_request.patient_id
     user_message = chat_request.user_message
 
-    # Convert `patient_id` to ObjectId
-    try:
-        patient = patients_collection.find_one({"_id": ObjectId(patient_id)})
-    except Exception:
-        raise HTTPException(status_code=400, detail="Invalid patient ID format")
-
+    # Fetch patient details
+    patient = patients_collection.find_one({"_id": ObjectId(patient_id)})
     if not patient:
         raise HTTPException(status_code=404, detail="Patient not found")
 
-    # Format patient details
+    # Format patient details into context
     patient_context = (
         f"Patient Details:\n"
         f"- Name: {patient['name']}\n"
         f"- Age: {patient['age']}\n"
         f"- Gender: {patient['gender']}\n"
-        f"- Medical History: {patient.get('medical_history', 'N/A')}\n\n"
+        f"- Medical History: {patient['medical_history']}\n\n"
         f"Now respond to the following message from the patient:"
     )
 
+    # Combine patient context with user message
     full_prompt = f"{patient_context}\n\nUser: {user_message}"
 
     try:
-        # ✅ Call Gemini API with full context
+        # Call the Gemini AI API with the full context
         response = model.generate_content(full_prompt)
 
-        # ✅ Extract response safely
-        bot_response = response.candidates[0].content.strip() if response.candidates else "Sorry, I couldn't generate a response."
+        # ✅ Correct way to extract the response
+        bot_response = response.text.strip() if hasattr(response, "text") else "Sorry, I couldn't generate a response."
 
-        # ✅ Handle token usage (Avoid NoneType errors)
-        tokens_used = getattr(response.usage_metadata, "total_tokens", 0) if hasattr(response, "usage_metadata") else 0
-        tokens_remaining = max(0, 10000 - tokens_used)
-
-        # ✅ Store chat in MongoDB
+        # Store chat in MongoDB
         chat_entry = {
             "patient_id": ObjectId(patient_id),
             "user_message": user_message,
-            "bot_response": bot_response,
-            "tokens_used": tokens_used,
-            "tokens_remaining": tokens_remaining
+            "bot_response": bot_response
         }
         chat_history_collection.insert_one(chat_entry)
 

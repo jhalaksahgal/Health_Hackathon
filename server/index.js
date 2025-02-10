@@ -2,11 +2,14 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import patientRoutes from "./routes/patients.js";
-import chatRoutes from "./routes/chats.js";
+import chatsRoutes from "./routes/chatsRoutes.js";
+import dotenv from "dotenv";
+
+dotenv.config();
+const MONGO_URI = process.env.MONGO_URI;
 
 const app = express();
 const PORT = 3001; // Hardcoded Port
-const MONGO_URI = "mongodb+srv://healthHack:healthHack1234@healthhack.5noaz.mongodb.net/healthDB?retryWrites=true&w=majority"; // Hardcoded MongoDB URI
 
 // Middleware
 app.use(express.json());
@@ -19,7 +22,7 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // Routes
 app.use("/patients", patientRoutes);
-app.use("/chats", chatRoutes);
+app.use("/chats", chatsRoutes);
 
 // Start Server
 app.listen(PORT, () => {
