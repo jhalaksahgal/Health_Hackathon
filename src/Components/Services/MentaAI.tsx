@@ -1,37 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const MentaAI: React.FC = () => {
     const [messages, setMessages] = useState<{ user: string, text: string }[]>([]);
     const [input, setInput] = useState('');
-const handleSend = async () => {
-    if (input.trim()) {
-        setMessages([...messages, { user: 'You', text: input }]);
+    const [loading, setLoading] = useState(false);
+    const [patientId, setPatientId] = useState<string | null>(null);
 
-        try {
-            const response = await fetch('http://localhost:8000/chat/chatWithBot', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                patient_id: "67a932d0ca3e10e26a9d8c40", // Replace with actual patient ID
-                user_message: input,
-            }),
-            });
+    useEffect(() => {
+        // Fetch or set patient_id dynamically (this can be modified to fetch from a login system)
+        setPatientId("67a932d0ca3e10e26a9d8c40"); // Replace with actual patient ID
+    }, []);
 
-            const data = await response.json();
-            setTimeout(() => {
-            setMessages((prevMessages) => [...prevMessages, { user: 'MentaAI', text: data.bot_response }]);
-            }, 1000); // Delay of 1 second
-        } catch (error) {
-            console.error('Error:', error);
-            setMessages((prevMessages) => [...prevMessages, { user: 'MentaAI', text: 'Error connecting to the server.' }]);
+    const handleSend = async () => {
+        if (input.trim() && patientId) {
+            setMessages([...messages, { user: 'You', text: input }]);
+            setLoading(true); // Show loading
+
+            try {
+                const response = await fetch('http://localhost:8000/chat/chatWithBot', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        patient_id: patientId,
+                        user_message: input,
+                    }),
+                });
+
+                const data = await response.json();
+                setMessages((prevMessages) => [...prevMessages, { user: 'MentaAI', text: data.bot_response }]);
+            } catch (error) {
+                console.error('Error:', error);
+                setMessages((prevMessages) => [...prevMessages, { user: 'MentaAI', text: 'Error connecting to the server.' }]);
+            }
+
+            setLoading(false);
+            setInput('');
         }
-
-        setInput('');
-    }
-};
-
+    };
 
     return (
         <div className="flex flex-col h-screen p-4 bg-gray-100">
@@ -44,6 +49,7 @@ const handleSend = async () => {
                         <strong>{message.user}:</strong> {message.text}
                     </div>
                 ))}
+                {loading && <p className="text-gray-500 italic">MentaAI is thinking...</p>}
             </div>
             <div className="flex-none mt-4">
                 <div className="flex">
@@ -54,7 +60,9 @@ const handleSend = async () => {
                         placeholder="Type your message..." 
                         className="flex-1 p-2 border rounded-l-lg"
                     />
-                    <button onClick={handleSend} className="p-2 bg-blue-500 text-white rounded-r-lg">Send</button>
+                    <button onClick={handleSend} className="p-2 bg-blue-500 text-white rounded-r-lg" disabled={loading}>
+                        {loading ? "Sending..." : "Send"}
+                    </button>
                 </div>
             </div>
         </div>
